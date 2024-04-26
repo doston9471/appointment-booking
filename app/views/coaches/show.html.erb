@@ -1,0 +1,40 @@
+<h1><%= @coach.full_name %></h1>
+
+<p><strong>Timezone:</strong> <%= @coach.timezone %></p>
+
+<% if @coach.available_days.any? %>
+  <h2>Available Days</h2>
+  <ul>
+    <% @coach.available_days.each do |day| %>
+      <li><%= day %></li>
+    <% end %>
+  </ul>
+
+  <%= link_to "Reserve Time Slot", new_coach_appointment_path(@coach), class: "btn btn-primary" %>
+<% else %>
+  <p>No available days for <%= @coach.full_name %>.</p>
+<% end %>
+
+<% if @appointments.any? %>
+  <h2>Appointments</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.day %></td>
+          <td><%= appointment.start_time.strftime("%A, %I:%M %p") %></td>
+          <td><%= appointment.end_time.strftime("%A, %I:%M %p") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No appointments for <%= @coach.full_name %>.</p>
+<% end %>

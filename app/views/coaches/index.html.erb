@@ -1,0 +1,7 @@
+<h1>Available Coaches</h1>
+
+<ul>
+  <% @coaches.each do |coach| %>
+    <li><%= link_to coach.full_name, coach %></li>
+  <% end %>
+</ul>

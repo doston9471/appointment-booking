@@ -1,0 +1,25 @@
+<!-- app/views/appointments/new.html.erb -->
+<h1>Reserve Time Slot: <%= @coach.full_name %></h1>
+
+<% if @available_days.any? %>
+  <%= form_with(model: [@coach, @appointment], url: coach_appointments_path(@coach), method: :post) do |form| %>
+    <%= form.hidden_field :coach_id, value: @coach.id %>
+    <div data-controller="appointments" data-appointments-url-value="<%= slots_coach_appointments_path(@coach) %>">
+      <div class="field">
+        <%= form.label :day %>
+        <%= form.select :day, options_for_select(@available_days), { prompt: "Select a day" }, { data: { action: "change->appointments#change" } } %>
+      </div>
+
+      <div class="field">
+        <%= form.label :start_time %>
+        <%= form.select :start_time, [], {}, { data: { appointments_target: "start_time" } } %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Reserve" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No available days for <%= @coach.full_name %>.</p>
+<% end %>
